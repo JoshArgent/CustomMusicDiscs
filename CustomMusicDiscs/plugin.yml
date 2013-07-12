@@ -1,0 +1,7 @@
+name: CustomMusicDiscs
+main: org.vanillaworld.CustomMusicDiscs.Main
+version: 1.0.0
+commands:
+  music:
+    description: Root Custom Music Discs command
+    usage: /<command>
