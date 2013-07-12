@@ -106,6 +106,10 @@ public class Main extends JavaPlugin implements Listener {
 				if(item != null)
 				{
 					ItemMeta meta = item.getItemMeta();
+					if(meta == null)
+					{
+						return;
+					}
 					if(meta.getLore() != null)
 					{
 						if(meta.getLore().contains("*Custom Disc*"))
