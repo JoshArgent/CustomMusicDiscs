@@ -12,6 +12,7 @@ public class Main extends JavaPlugin implements Listener {
 	public void onEnable()
 	{
 		plugin = this;
+		Setup.setupFolders(); // Setup the folder structure
 	}
 	
 	public void onDisable()
