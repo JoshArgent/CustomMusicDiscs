@@ -20,7 +20,7 @@ import org.bukkit.Sound;
  */
 public class MidiUtil
 {
-	private static void playMidi(Sequence seq, float tempo, Location l)
+	private static Sequencer playMidi(Sequence seq, float tempo, Location l)
 		throws InvalidMidiDataException, IOException, MidiUnavailableException
 	{
 		Sequencer sequencer = MidiSystem.getSequencer(false);
@@ -33,39 +33,38 @@ public class MidiUtil
 		NoteBlockReceiver noteblockRecv = new NoteBlockReceiver(l);
 		sequencer.getTransmitter().setReceiver(noteblockRecv);
 		sequencer.start();
+		return sequencer;
 	}
 
-	public static void playMidi(File file, float tempo, Location l)
+	public static Sequencer playMidi(File file, float tempo, Location l)
 		throws InvalidMidiDataException, IOException, MidiUnavailableException
-	{ playMidi(MidiSystem.getSequence(file), tempo, l); }
+	{ return playMidi(MidiSystem.getSequence(file), tempo, l); }
 
-	public static void playMidi(InputStream stream, float tempo, Location l)
+	public static Sequencer playMidi(InputStream stream, float tempo, Location l)
 		throws InvalidMidiDataException, IOException, MidiUnavailableException
-	{ playMidi(MidiSystem.getSequence(stream), tempo, l); }
+	{ return playMidi(MidiSystem.getSequence(stream), tempo, l); }
 
-	public static boolean playMidiQuietly(File file, float tempo, Location l)
+	public static Sequencer playMidiQuietly(File file, float tempo, Location l)
 	{
-		try { MidiUtil.playMidi(file, tempo, l); }
-		catch (MidiUnavailableException e) { e.printStackTrace(); return false; }
-		catch (InvalidMidiDataException e) { e.printStackTrace(); return false; }
-		catch (IOException e) { e.printStackTrace(); return false; }
-
-		return true;
+		try { return MidiUtil.playMidi(file, tempo, l); }
+		catch (MidiUnavailableException e) { e.printStackTrace(); return null; }
+		catch (InvalidMidiDataException e) { e.printStackTrace(); return null; }
+		catch (IOException e) { e.printStackTrace(); return null; }
 	}
-	public static boolean playMidiQuietly(InputStream stream, float tempo, Location l)
+	public static Sequencer playMidiQuietly(InputStream stream, float tempo, Location l)
 	{
 		try { MidiUtil.playMidi(stream, tempo, l); }
-		catch (MidiUnavailableException e) { e.printStackTrace(); return false; }
-		catch (InvalidMidiDataException e) { e.printStackTrace(); return false; }
-		catch (IOException e) { e.printStackTrace(); return false; }
+		catch (MidiUnavailableException e) { e.printStackTrace(); return null; }
+		catch (InvalidMidiDataException e) { e.printStackTrace(); return null; }
+		catch (IOException e) { e.printStackTrace(); return null; }
 
-		return true;
+		return null;
 	}
 
-	public static boolean playMidiQuietly(File file, Location l)
+	public static Sequencer playMidiQuietly(File file, Location l)
 	{ return playMidiQuietly(file, 1.0f, l); }
 
-	public static boolean playMidiQuietly(InputStream stream, Location l)
+	public static Sequencer playMidiQuietly(InputStream stream, Location l)
 	{ return playMidiQuietly(stream, 1.0f, l); }
 
 	// provided by github.com/sk89q/craftbook
