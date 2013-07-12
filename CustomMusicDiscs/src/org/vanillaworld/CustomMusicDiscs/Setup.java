@@ -1,6 +1,8 @@
 package org.vanillaworld.CustomMusicDiscs;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Setup {
 	
@@ -21,5 +23,23 @@ public class Setup {
 		}
 	}
 	
+	public static List<Disc> getDiscs()
+	{
+		List<Disc> discs = new ArrayList<Disc>();
+		String files;
+		File[] listOfFiles = discFolder.listFiles(); 
+		for (int i = 0; i < listOfFiles.length; i++) 
+		{
+			if (listOfFiles[i].isFile()) 
+			{
+				files = listOfFiles[i].getName();
+				if (files.endsWith(".mid") || files.endsWith(".MID") || files.endsWith(".MIDI") || files.endsWith(".midi"))
+				{
+					discs.add(new Disc(listOfFiles[i]));
+				}
+			}
+		}
+		return discs;
+	}
 
 }

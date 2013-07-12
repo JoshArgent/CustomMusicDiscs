@@ -1,5 +1,7 @@
 package org.vanillaworld.CustomMusicDiscs;
 
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -11,15 +13,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin implements Listener {
 	
 	public static JavaPlugin plugin;
+	public static List<Disc> discs;
 	
 	public void onEnable()
 	{
 		plugin = this;
 		Setup.setupFolders(); // Setup the folder structure
+		discs = Setup.getDiscs(); // Load discs
 	}
 	
 	public void onDisable()
 	{
+		discs = null;
 		plugin = null;
 	}
 	
